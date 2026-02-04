@@ -23,26 +23,21 @@
     *{ box-sizing:border-box; }
 
     body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      color: var(--text);
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color: var(--text);
 
-      /* ✅ IMAGE DE FOND NETTE */
-      background-image:
-        radial-gradient(900px 500px at 15% -10%, rgba(255,79,216,.18), transparent 55%),
-        radial-gradient(900px 500px at 110% 10%, rgba(255,122,230,.12), transparent 50%),
-        url("images/generalbot.jpg");
+  /* IMAGE NETTE – AUCUN FLOU */
+  background-image: url("images/generalbot.jpg");
+  background-repeat: no-repeat;
+  background-position: center top;
 
-      /* 🔥 IMPORTANT : cover peut agrandir l’image et la rendre moins nette.
-         Si ton image est grande (HD), garde cover.
-         Si ton image est petite, essaie "contain" (voir plus bas). */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+  /* 🔥 CLÉ DE LA NETTETÉ */
+  background-size: contain;
 
-      /* Sur mobile/Telegram, fixed peut causer des bugs -> on le retire */
-      background-attachment: scroll;
-    }
+  /* fond clair derrière l’image */
+  background-color: #0a0a0f;
+}
 
     .wrap{
       padding:16px;
@@ -209,3 +204,4 @@
   </script>
 </body>
 </html>
+
