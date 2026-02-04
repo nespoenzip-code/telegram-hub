@@ -19,21 +19,19 @@
 
     *{box-sizing:border-box}
 
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-      color:var(--text);
+   body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  color:var(--text);
 
-      /* ✅ Image de fond comme avant */
-      background-image:url("generalbot.jpg");
-      background-repeat:no-repeat;
-      background-position:center top;
-      background-size:contain;
-      background-color:var(--bg);
+  background-image:url("generalbot.jpg");
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-size:cover;   /* ✅ remplit tout l’écran */
+  background-color:var(--bg);
 
-      /* ✅ laisse de la place à la nav */
-      padding-bottom:80px;
-    }
+  padding-bottom:80px;
+}
 
     /* ✅ couche légère pour lisibilité (sans flou) */
     body::before{
@@ -257,3 +255,4 @@
   </script>
 </body>
 </html>
+
