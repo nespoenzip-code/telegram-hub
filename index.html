@@ -27,19 +27,13 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color: var(--text);
 
-      /* ✅ Image à la racine du repo */
       background-image: url("generalbot.jpg");
       background-repeat: no-repeat;
       background-position: center top;
-
-      /* ✅ net (pas de zoom) */
       background-size: contain;
-
-      /* fond derrière l’image */
       background-color: var(--bg);
     }
 
-    /* ✅ couche légère pour lisibilité (AUCUN flou) */
     body::before{
       content:"";
       position: fixed;
@@ -156,12 +150,15 @@
     <div class="title">Mes bots</div>
     <p class="subtitle">Choisis le service que tu veux utiliser.</p>
 
-    <input id="q" class="search" placeholder="Rechercher" />
+    <input id="q" class="search" type="search" placeholder="Rechercher"
+           autocapitalize="off" autocomplete="off" />
 
     <div class="section">Bots</div>
     <div class="list" id="list"></div>
+  </div>
 
-
+  <!-- ✅ TON JS DOIT ÊTRE DANS UN <script> -->
+  <script>
     const BOTS = [
       { name: "Formation", username: "FFFormaBot", avatarText: "FF", start: "" },
       { name: "Inscription", username: "fxcessssssBot", avatarText: "IN", start: "" },
@@ -181,7 +178,11 @@
       const f = filter.trim().toLowerCase();
 
       BOTS
-        .filter(b => !f || b.name.toLowerCase().includes(f) || ("@" + b.username).toLowerCase().includes(f))
+        .filter(b =>
+          !f ||
+          b.name.toLowerCase().includes(f) ||
+          ("@" + b.username).toLowerCase().includes(f)
+        )
         .forEach(bot => {
           const row = document.createElement("div");
           row.className = "row";
@@ -193,7 +194,12 @@
             </div>
             <div class="chev">›</div>
           `;
-          row.onclick = () => { window.location.href = botLink(bot); };
+
+          row.addEventListener("click", () => {
+            // Ouvre le bot
+            window.location.href = botLink(bot);
+          });
+
           listEl.appendChild(row);
         });
     }
@@ -203,4 +209,3 @@
   </script>
 </body>
 </html>
-
