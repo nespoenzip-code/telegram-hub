@@ -22,35 +22,34 @@
 
     *{ box-sizing:border-box; }
 
-    /* ✅ Fond image NETTE, pas floue */
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color: var(--text);
 
-      /* Si ton image est AU MEME ENDROIT que index.html */
+      /* ✅ Image à la racine du repo */
       background-image: url("generalbot.jpg");
       background-repeat: no-repeat;
       background-position: center top;
 
-      /* 🔥 Pour garder l’image nette: pas de zoom */
+      /* ✅ net (pas de zoom) */
       background-size: contain;
 
-      /* Fond clair derrière l’image (quand il y a des marges) */
+      /* fond derrière l’image */
       background-color: var(--bg);
     }
 
-    /* Petite couche pour que le texte soit lisible (sans flouter l’image) */
+    /* ✅ couche légère pour lisibilité (AUCUN flou) */
     body::before{
       content:"";
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.22);
+      background: rgba(0,0,0,.18);
       pointer-events: none;
     }
 
     .wrap{
-      position: relative; /* pour passer au-dessus du ::before */
+      position: relative;
       padding:16px;
       max-width: 560px;
       margin: 0 auto;
@@ -82,10 +81,6 @@
       margin: 10px 0 14px;
       box-shadow: 0 10px 18px rgba(0,0,0,.25);
       transition: .2s;
-
-      /* ✅ pas de blur */
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
     }
     .search:focus{
       border-color: rgba(255,79,216,.55);
@@ -107,10 +102,6 @@
       overflow: hidden;
       background: var(--card);
       box-shadow: var(--shadow);
-
-      /* ✅ pas de blur */
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
     }
 
     .row{
