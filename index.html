@@ -9,7 +9,7 @@
 
   <style>
     :root{
-      --bg: #07070a;
+      --bg: #0a0a0f;
       --card: rgba(15, 15, 20, .78);
       --text: #f6f2ff;
       --muted: rgba(246,242,255,.68);
@@ -22,24 +22,35 @@
 
     *{ box-sizing:border-box; }
 
+    /* ✅ Fond image NETTE, pas floue */
     body{
-  margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  color: var(--text);
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color: var(--text);
 
-  /* IMAGE NETTE – AUCUN FLOU */
-  background-image: url("images/generalbot.jpg");
-  background-repeat: no-repeat;
-  background-position: center top;
+      /* Si ton image est AU MEME ENDROIT que index.html */
+      background-image: url("generalbot.jpg");
+      background-repeat: no-repeat;
+      background-position: center top;
 
-  /* 🔥 CLÉ DE LA NETTETÉ */
-  background-size: contain;
+      /* 🔥 Pour garder l’image nette: pas de zoom */
+      background-size: contain;
 
-  /* fond clair derrière l’image */
-  background-color: #0a0a0f;
-}
+      /* Fond clair derrière l’image (quand il y a des marges) */
+      background-color: var(--bg);
+    }
+
+    /* Petite couche pour que le texte soit lisible (sans flouter l’image) */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.22);
+      pointer-events: none;
+    }
 
     .wrap{
+      position: relative; /* pour passer au-dessus du ::before */
       padding:16px;
       max-width: 560px;
       margin: 0 auto;
@@ -72,7 +83,7 @@
       box-shadow: 0 10px 18px rgba(0,0,0,.25);
       transition: .2s;
 
-      /* ✅ ENLEVÉ : pas de blur (ça peut donner un rendu “flou”) */
+      /* ✅ pas de blur */
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
     }
@@ -97,7 +108,7 @@
       background: var(--card);
       box-shadow: var(--shadow);
 
-      /* ✅ ENLEVÉ : blur */
+      /* ✅ pas de blur */
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
     }
@@ -204,4 +215,3 @@
   </script>
 </body>
 </html>
-
