@@ -207,14 +207,11 @@
   const tg = window.Telegram?.WebApp;
   if (tg) {
     tg.expand();
-
-    // ✅ SIGNAL AUTOMATIQUE AU BOT (OUVERTURE MINI-APP)
-    tg.sendData(JSON.stringify({
-      action: "open_webapp"
     }));
   }
 </script>
 
 </body>
 </html>
+
 
