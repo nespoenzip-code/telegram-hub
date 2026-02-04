@@ -4,6 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- ✅ Supprime le titre "My bot" -->
+  <title></title>
+
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
@@ -13,9 +16,9 @@
       --text:#f6f2ff;
       --muted:rgba(246,242,255,.6);
 
-      --green:#b7ff2a;   /* Accueil */
-      --blue:#4fd1ff;    /* Contact */
-      --pink:#ff7ae6;    /* Canal */
+      --green:#b7ff2a;
+      --blue:#4fd1ff;
+      --pink:#ff7ae6;
 
       --shadow:0 12px 30px rgba(0,0,0,.45);
     }
@@ -28,10 +31,9 @@
       color:var(--text);
       background:var(--bg);
       padding-bottom:80px;
-      overflow-x:hidden; /* ✅ évite le scroll horizontal pendant le slide */
+      overflow-x:hidden;
     }
 
-    /* 🏠 Image plein écran seulement sur Accueil */
     #home{
       min-height:100vh;
       background:url("generalbot.jpg") center center / cover no-repeat;
@@ -44,15 +46,12 @@
       pointer-events:none;
     }
 
-    /* Pages propres */
     #contact, #channel{
       min-height:100vh;
       background:linear-gradient(180deg, rgba(10,10,15,.95), rgba(10,10,15,.85));
     }
 
-    /* ✅ Pages en mode "slide" */
     .page{
-      display:block;
       position:absolute;
       top:0; left:0; right:0;
       padding:16px;
@@ -61,24 +60,16 @@
       opacity:0;
       transform:translateX(18px);
       pointer-events:none;
-      transition:transform .26s ease, opacity .26s ease;
-      will-change:transform, opacity;
+      transition:.26s ease;
     }
     .page.active{
       opacity:1;
-      transform:translateX(0);
+      transform:none;
       pointer-events:auto;
     }
-    .page.exit-left{
-      opacity:0;
-      transform:translateX(-18px);
-    }
-    .page.exit-right{
-      opacity:0;
-      transform:translateX(18px);
-    }
+    .page.exit-left{transform:translateX(-18px);opacity:0}
+    .page.exit-right{transform:translateX(18px);opacity:0}
 
-    /* wrapper pour garantir hauteur */
     .pages{
       position:relative;
       min-height:100vh;
@@ -100,7 +91,6 @@
       padding:14px;
       border-bottom:1px solid rgba(255,255,255,.08);
       cursor:pointer;
-      user-select:none;
     }
     .row:last-child{border-bottom:none}
 
@@ -120,7 +110,6 @@
     .user{font-size:12px;color:var(--muted)}
 
     .btn{
-      display:block;
       width:100%;
       margin-top:16px;
       padding:14px;
@@ -132,7 +121,6 @@
     .btn.contact{background:var(--blue); color:#000}
     .btn.channel{background:var(--pink); color:#000}
 
-    /* 🔻 NAV BAR */
     .nav{
       position:fixed;
       bottom:0;left:0;right:0;
@@ -149,98 +137,67 @@
       flex-direction:column;
       align-items:center;
       font-size:12px;
-      cursor:pointer;
       gap:4px;
       opacity:.65;
-      transition:opacity .18s ease;
+      cursor:pointer;
     }
+    .nav-item.active{
+      opacity:1;
+      text-shadow:0 0 14px currentColor;
+    }
+
+    .nav-home{color:var(--green)}
+    .nav-contact{color:var(--blue)}
+    .nav-channel{color:var(--pink)}
 
     .nav-item svg{
       width:26px;height:26px;
       stroke:currentColor;
       fill:none;
       stroke-width:2;
-      stroke-linecap:round;
-      stroke-linejoin:round;
-      opacity:.95;
-    }
-
-    /* 🎨 Couleur par icône */
-    .nav-home{color:var(--green)}
-    .nav-contact{color:var(--blue)}
-    .nav-channel{color:var(--pink)}
-
-    /* 🔥 Actif = full opacity + glow */
-    .nav-item.active{
-      opacity:1;
-      text-shadow:0 0 14px currentColor;
     }
   </style>
 </head>
 
 <body>
   <div class="pages">
-    <!-- 🏠 ACCUEIL -->
+
     <div id="home" class="page active">
       <h2>Mes bots</h2>
       <div class="list" id="list"></div>
     </div>
 
-    <!-- 📞 CONTACT -->
     <div id="contact" class="page">
       <h2>Contact</h2>
       <p style="color:var(--muted)">Besoin d’aide ou de renseignements ?</p>
-      <button class="btn contact" data-haptic="true" onclick="openLink('https://t.me/kssbdr')">
+      <button class="btn contact" onclick="openLink('https://t.me/kssbdr')">
         Contacter @kssbdr
       </button>
     </div>
 
-    <!-- 📢 CANAL -->
     <div id="channel" class="page">
       <h2>Canal Telegram</h2>
       <p style="color:var(--muted)">Rejoins le canal pour les infos & nouveautés.</p>
-      <button class="btn channel" data-haptic="true" onclick="openLink('https://t.me/+6K0C-ZPVV_tlZWY0')">
+      <button class="btn channel" onclick="openLink('https://t.me/+6K0C-ZPVV_tlZWY0')">
         Rejoindre le canal
       </button>
     </div>
+
   </div>
 
-  <!-- 🔻 NAV -->
   <div class="nav">
-    <div class="nav-item nav-home active" onclick="navigateTo('home', this)">
-      <!-- home -->
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M3 10.5L12 3l9 7.5"></path>
-        <path d="M5 10v10h14V10"></path>
-      </svg>
-      Accueil
-    </div>
-
-    <div class="nav-item nav-contact" onclick="navigateTo('contact', this)">
-      <!-- info -->
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="9"></circle>
-        <path d="M12 10v7"></path>
-        <path d="M12 7h.01"></path>
-      </svg>
-      Contact
-    </div>
-
-    <div class="nav-item nav-channel" onclick="navigateTo('channel', this)">
-      <!-- ✅ mégaphone (plus de panier) -->
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 11v2"></path>
-        <path d="M6 10v4"></path>
-        <path d="M8 9v6"></path>
-        <path d="M10 10l10-4v12l-10-4z"></path>
-        <path d="M9 15l1.5 4.5"></path>
-      </svg>
-      Canal
-    </div>
+    <div class="nav-item nav-home active" onclick="navigateTo('home',this)">Accueil</div>
+    <div class="nav-item nav-contact" onclick="navigateTo('contact',this)">Contact</div>
+    <div class="nav-item nav-channel" onclick="navigateTo('channel',this)">Canal</div>
   </div>
 
   <script>
-    if (window.Telegram?.WebApp) Telegram.WebApp.ready();
+    if (window.Telegram?.WebApp) {
+      Telegram.WebApp.ready();
+      Telegram.WebApp.expand();
+      Telegram.WebApp.setHeaderColor("#0a0a0f");
+      Telegram.WebApp.setBackgroundColor("#0a0a0f");
+    }
 
     const BOTS = [
       { name:"Formation", username:"FFFormaBot", avatarText:"FF" },
@@ -250,84 +207,46 @@
 
     const listEl = document.getElementById("list");
 
-    function haptic(type="selection"){
-      const hf = window.Telegram?.WebApp?.HapticFeedback;
-      if (!hf) return;
-
-      // type: "selection" | "light" | "medium" | "heavy"
-      if (type === "selection") hf.selectionChanged();
-      else hf.impactOccurred(type);
-    }
-
     function openLink(url){
-      haptic("light");
-      if (Telegram?.WebApp?.openTelegramLink) Telegram.WebApp.openTelegramLink(url);
-      else window.location.href = url;
+      Telegram?.WebApp?.openTelegramLink
+        ? Telegram.WebApp.openTelegramLink(url)
+        : window.location.href = url;
     }
 
     function renderBots(){
       listEl.innerHTML="";
-      BOTS.forEach(bot=>{
-        const row=document.createElement("div");
-        row.className="row";
-        row.innerHTML=`
-          <div class="avatar">${bot.avatarText}</div>
+      BOTS.forEach(b=>{
+        const r=document.createElement("div");
+        r.className="row";
+        r.innerHTML=`
+          <div class="avatar">${b.avatarText}</div>
           <div class="meta">
-            <div class="name">${bot.name}</div>
-            <div class="user">@${bot.username}</div>
+            <div class="name">${b.name}</div>
+            <div class="user">@${b.username}</div>
           </div>`;
-        row.onclick=()=>{
-          haptic("selection");
-          openLink(`https://t.me/${bot.username}`);
-        };
-        listEl.appendChild(row);
+        r.onclick=()=>openLink(`https://t.me/${b.username}`);
+        listEl.appendChild(r);
       });
     }
 
-    let currentPageId = "home";
-    const order = ["home","contact","channel"];
+    let current="home";
+    const order=["home","contact","channel"];
 
-    function navigateTo(id, el){
-      if (id === currentPageId) return;
+    function navigateTo(id,el){
+      if(id===current) return;
+      const c=document.getElementById(current);
+      const n=document.getElementById(id);
 
-      haptic("selection");
+      c.classList.remove("active");
+      n.classList.add("active");
 
-      const current = document.getElementById(currentPageId);
-      const next = document.getElementById(id);
-
-      const curIdx = order.indexOf(currentPageId);
-      const nextIdx = order.indexOf(id);
-      const goingRight = nextIdx > curIdx;
-
-      // sortie de la page actuelle
-      current.classList.remove("active");
-      current.classList.remove("exit-left","exit-right");
-      current.classList.add(goingRight ? "exit-left" : "exit-right");
-
-      // entrée de la nouvelle page
-      next.classList.remove("exit-left","exit-right");
-      next.classList.add("active");
-
-      // nettoyage après l'animation
-      setTimeout(()=>{
-        current.classList.remove("exit-left","exit-right");
-      }, 300);
-
-      // nav active state
-      document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+      document.querySelectorAll(".nav-item").forEach(x=>x.classList.remove("active"));
       el.classList.add("active");
 
-      currentPageId = id;
+      current=id;
     }
-
-    // Haptic léger sur boutons (au cas où)
-    document.addEventListener("click", (e)=>{
-      const t = e.target;
-      if (t && t.matches("[data-haptic='true']")) haptic("light");
-    });
 
     renderBots();
   </script>
 </body>
 </html>
-
